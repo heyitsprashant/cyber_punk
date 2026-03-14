@@ -10,7 +10,8 @@ class Level4(BaseLevel):
 
     def __init__(self):
         super().__init__()
-        self.total_planets = 15
+        self.total_planets = 8
+        self.required_planets = 5
         self.planets_left_to_spawn = self.total_planets - 1
         self.blackholes = [
             BlackHole(pygame.Vector2(580, 220), pull_radius=200, event_horizon=34, pull_strength=0.55),
@@ -18,7 +19,7 @@ class Level4(BaseLevel):
         ]
         self.portal_entry = pygame.Rect(380, SCREEN_HEIGHT // 2 - 60, 26, 120)
         self.portal_exit = pygame.Rect(980, SCREEN_HEIGHT // 2 - 60, 26, 120)
-        self.status_message = "Use portals and avoid black hole event horizons"
+        self.status_message = "Place 5 planets in orbit. Learn about black holes and galaxy transfer!"
 
     def update(self, dt: float) -> None:
         if self.active_planet and self.active_planet.state == "launched":

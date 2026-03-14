@@ -13,15 +13,16 @@ class Level3(BaseLevel):
     def __init__(self):
         super().__init__()
         self.phase = "planets"
-        self.required_moons = 8
-        self.total_moons = 12
+        self.required_planets = 5
+        self.required_moons = 5
+        self.total_moons = 8
         self.moons_left_to_spawn = self.total_moons
         self.active_moon: Moon | None = None
         self.locked_moons: list[Moon] = []
         self.asteroids: list[Asteroid] = []
         self.asteroid_timer = 0.0
         self.asteroid_interval = 0.9
-        self.status_message = "Phase 1: Place 8 planets, then place moons"
+        self.status_message = "Phase 1: Place 5 planets, then place moons. Learn about moons and asteroids!"
 
     def _spawn_next_moon(self) -> None:
         if self.moons_left_to_spawn <= 0:
@@ -143,6 +144,14 @@ class Level3(BaseLevel):
     def draw(self, surface: pygame.Surface, font: pygame.font.Font) -> None:
         super().draw(surface, font)
 
+        # Draw sun in the center
+        pygame.draw.circle(surface, (255, 255, 120), (int(self.orbit_slots[0].x), int(self.orbit_slots[0].y)), 38)
+        pygame.draw.circle(surface, (255, 200, 60), (int(self.orbit_slots[0].x), int(self.orbit_slots[0].y)), 38, 3)
+
+        # Always show asteroids
+        for asteroid in self.asteroids:
+            asteroid.draw(surface)
+
         if self.phase == "moons":
             targets = self._moon_orbit_targets()
             for _, target in targets:
@@ -152,8 +161,6 @@ class Level3(BaseLevel):
                 moon.draw(surface)
             if self.active_moon:
                 self.active_moon.draw(surface)
-            for asteroid in self.asteroids:
-                asteroid.draw(surface)
 
             text = font.render("ASTEROID FIELD ACTIVE", True, COLOR_WHITE)
             phase = font.render("MOON PHASE", True, COLOR_NEON_GREEN)

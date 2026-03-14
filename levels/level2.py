@@ -11,12 +11,13 @@ class Level2(BaseLevel):
 
     def __init__(self):
         super().__init__()
-        self.total_planets = 14
+        self.total_planets = 8
+        self.required_planets = 5
         self.planets_left_to_spawn = self.total_planets - 1  # one is already active from base init
         self.meteors: list[Meteor] = []
         self.meteor_spawn_timer = 0.0
         self.meteor_spawn_interval = 1.1
-        self.status_message = "Meteors can destroy orbiting planets"
+        self.status_message = "Place 5 planets in orbit. Meteors can destroy planets! Learn about space hazards."
 
     def _meteor_hits_planet(self, meteor: Meteor, planet) -> bool:
         return meteor.position.distance_to(planet.position) <= meteor.radius + planet.radius

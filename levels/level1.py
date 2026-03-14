@@ -7,4 +7,5 @@ class Level1(BaseLevel):
 
     def __init__(self):
         super().__init__()
-        self.status_message = "Tutorial: place 8 planets in orbit"
+        self.required_planets = 5
+        self.status_message = "Tutorial: Place 5 planets in orbit. Learn about the solar system!"
