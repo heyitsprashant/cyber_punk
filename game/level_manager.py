@@ -33,6 +33,12 @@ class BaseLevel:
         self.is_complete = False
         self.is_failed = False
         self.status_message = "Launch planets into orbit slots"
+        # Optional level background artwork.
+        self.bg_image: pygame.Surface | None = None
+        try:
+            self.bg_image = pygame.image.load("assets/space_background.png").convert()
+        except Exception:
+            self.bg_image = None
         self._spawn_next_planet()
 
     def _build_orbit_slots(self, count: int, radius: float) -> list[pygame.Vector2]:
@@ -130,12 +136,16 @@ class BaseLevel:
         self._check_end_state()
 
     def draw_background(self, surface: pygame.Surface) -> None:
-        surface.fill((6, 6, 18))
-        for i in range(35):
-            x = (i * 211) % SCREEN_WIDTH
-            y = (i * 127) % SCREEN_HEIGHT
-            color = (20 + (i * 5) % 100, 20, 60 + (i * 4) % 160)
-            pygame.draw.circle(surface, color, (x, y), 2)
+        if self.bg_image:
+            bg = pygame.transform.smoothscale(self.bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+            surface.blit(bg, (0, 0))
+        else:
+            surface.fill((6, 6, 18))
+            for i in range(35):
+                x = (i * 211) % SCREEN_WIDTH
+                y = (i * 127) % SCREEN_HEIGHT
+                color = (20 + (i * 5) % 100, 20, 60 + (i * 4) % 160)
+                pygame.draw.circle(surface, color, (x, y), 2)
 
     def draw(self, surface: pygame.Surface, font: pygame.font.Font) -> None:
         self.draw_background(surface)
